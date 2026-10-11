@@ -11,16 +11,30 @@ import plotly.express as px
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
-DATA_PATH = os.path.join(BASE_DIR, "data", "customers.csv")
-MODEL_PATH = os.path.join(BASE_DIR, "models", "best_model.pkl")
-SCALER_PATH = os.path.join(BASE_DIR, "models", "scaler.pkl")
-FEATURE_COLUMNS_PATH = os.path.join(BASE_DIR, "models", "feature_columns.pkl")
-METADATA_PATH = os.path.join(BASE_DIR, "models", "model_metadata.pkl")
+# Support files stored either in folders or in the root directory
+def find_file(folder, filename):
+    folder_path = os.path.join(BASE_DIR, folder, filename)
+    root_path = os.path.join(BASE_DIR, filename)
+
+    if os.path.exists(folder_path):
+        return folder_path
+    if os.path.exists(root_path):
+        return root_path
+
+    return folder_path
+
+
+DATA_PATH = find_file("data", "customers.csv")
+MODEL_PATH = find_file("models", "best_model.pkl")
+SCALER_PATH = find_file("models", "scaler.pkl")
+FEATURE_COLUMNS_PATH = find_file("models", "feature_columns.pkl")
+METADATA_PATH = find_file("models", "model_metadata.pkl")
 
 SRC_PATH = os.path.join(BASE_DIR, "src")
 
-if SRC_PATH not in sys.path:
+if os.path.isdir(SRC_PATH) and SRC_PATH not in sys.path:
     sys.path.insert(0, SRC_PATH)
+
 
 
 # STREAMLIT CONFIG
