@@ -31,27 +31,39 @@ st.set_page_config(
     layout="wide"
 )
 
-
 # CUSTOM CSS
 
 st.markdown(
     """
     <style>
-
     .main {
         padding-top: 1rem;
     }
 
-    .stMetric {
+    [data-testid="stMetric"] {
         background-color: #f8f9fa;
-        padding: 10px;
+        padding: 16px;
         border-radius: 10px;
+        border: 1px solid #dee2e6;
     }
 
+    [data-testid="stMetricLabel"],
+    [data-testid="stMetricLabel"] p {
+        color: #374151 !important;
+        font-size: 14px !important;
+    }
+
+    [data-testid="stMetricValue"],
+    [data-testid="stMetricValue"] div {
+        color: #111827 !important;
+        font-size: 28px !important;
+        font-weight: 700 !important;
+    }
     </style>
     """,
     unsafe_allow_html=True
 )
+
 
 
 # CACHED PROJECT FILE LOADERS
@@ -187,6 +199,7 @@ if page == "📊 Business Dashboard":
         if total_customers > 0
         else 0
     )
+    
 
     avg_satisfaction = df["satisfaction_score"].mean()
 
